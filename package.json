@@ -1,0 +1,16 @@
+{
+  "name": "markdown-viewer",
+  "version": "0.1.0",
+  "main": "main.js",
+  "description": "A simple desktop markdown viewer",
+  "repository": "znewton/markdown-viewer",
+  "license": "MIT",
+  "devDependencies": {
+    "devtron": "1.4.0",
+    "electron": "1.7.9",
+    "electron-packager": "9.1.0"
+  },
+  "dependencies": {
+    "electron-debug": "1.4.0"
+  }
+}
