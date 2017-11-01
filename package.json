@@ -5,6 +5,9 @@
   "description": "A simple desktop markdown viewer",
   "repository": "znewton/markdown-viewer",
   "license": "MIT",
+  "scripts": {
+    "start": "electron ."
+  },
   "devDependencies": {
     "devtron": "1.4.0",
     "electron": "1.7.9",
