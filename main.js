@@ -23,5 +23,4 @@ app.on('activate', () => {
     createWindow()
   }
 })
-
-document.write('testing');
+app.on('ready', createWindow);
