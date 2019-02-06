@@ -6,14 +6,19 @@
   "repository": "znewton/markdown-viewer",
   "license": "MIT",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "lint": "eslint",
+    "prettier": "prettier **/*.js **/*.css",
+    "prettier-write": "prettier --write **/*.js **/*.css"
   },
   "devDependencies": {
-    "devtron": "1.4.0",
-    "electron": "1.7.9",
-    "electron-packager": "9.1.0"
+    "devtron": "^1.4.0",
+    "eslint": "^5.13.0",
+    "eslint-plugin-prettier": "^3.0.1",
+    "prettier": "^1.16.4"
   },
   "dependencies": {
+    "electron": "^4.0.4",
     "electron-debug": "1.4.0"
   }
 }
