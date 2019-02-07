@@ -24,6 +24,7 @@ body {
 
 table {
   border-collapse: collapse;
+  counter-reset: tnum;
 }
 th {
   text-align: left;
@@ -31,7 +32,7 @@ th {
 thead tr {
   border-bottom: 2px solid var(--gray6);
 }
-tbody tr {
+tbody tr:not(:last-of-type) {
   border-bottom: 1px solid var(--gray7);
 }
 tbody tr:nth-child(odd) {
@@ -43,6 +44,37 @@ tbody tr:hover {
 }
 th, td {
   padding: 0.3rem 0.5rem;
+  padding-right: 1.5rem;
+}
+td.tnum, th.tnum {
+  color: var(--gray5);
+  text-align: right;
+}
+td.tnum::before {
+  counter-increment: tnum;
+  content: counter(tnum);
+}
+th {
+  position: relative;
+}
+th:not(.tnum)::after {
+  position: absolute;
+  right: 0.25rem;
+  top: 40%;
+  content: "";
+  width: 0; 
+  height: 0; 
+  border-left: 0.5rem solid transparent;
+  border-right: 0.5rem solid transparent;
+  border-top: 0.5rem solid var(--gray2);
+  display:none;
+}
+th.sort-asc::after {
+  display: block;
+}
+th.sort-desc::after {
+  display: block;
+  transform: rotate(180deg);
 }
 
 
