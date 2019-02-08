@@ -20,6 +20,7 @@
   "dependencies": {
     "electron": "^4.0.4",
     "electron-debug": "1.4.0",
+    "highlight.js": "^9.14.2",
     "jsdom": "^13.2.0",
     "marked": "^0.6.0"
   }

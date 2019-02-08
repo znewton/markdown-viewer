@@ -4,6 +4,7 @@ const url = require('url');
 const fs = require('fs');
 const marked = require('marked');
 const { JSDOM } = require('jsdom');
+const highlightJS = require('highlight.js');
 
 function checkIfCalledViaCLI(args) {
   if (args && args.length > 1) {
@@ -46,18 +47,35 @@ ${err}
         }
 
         const tmpFilePath = path.join(app.getPath('temp'), 'temp.index.html');
-        const generatedHTML = marked(data);
+        const generatedHTML = marked(data, {
+          highlight: function(code, lang) {
+            try {
+              return highlightJS.highlight(lang ? lang : 'plaintext', code)
+                .value;
+            } catch (e) {
+              return highlightJS.highlight('plaintext', code).value;
+            }
+          },
+        });
         const dom = new JSDOM(generatedHTML);
         const document = dom.window.document;
         const cssFilePath = path.join(__dirname, 'index.css');
         const cssTag = document.createElement('link');
         cssTag.setAttribute('rel', 'stylesheet');
         cssTag.setAttribute('href', path.resolve(cssFilePath));
+        const highlightCssFilePath = path.join(__dirname, 'highlight.css');
+        const highlightCssTag = document.createElement('link');
+        highlightCssTag.setAttribute('rel', 'stylesheet');
+        highlightCssTag.setAttribute(
+          'href',
+          path.resolve(highlightCssFilePath)
+        );
         const jsFilePath = path.join(__dirname, 'index.js');
         const jsTag = document.createElement('script');
         jsTag.setAttribute('type', 'application/javascript');
         jsTag.setAttribute('src', path.resolve(jsFilePath));
         document.head.appendChild(cssTag);
+        document.head.appendChild(highlightCssTag);
         document.body.appendChild(jsTag);
         fs.writeFile(tmpFilePath, dom.serialize(), err => {
           if (err) {

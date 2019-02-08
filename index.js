@@ -84,4 +84,69 @@ function addTableSortClickEvents() {
   }
 }
 
+function addSideNav() {
+  const anchors = document.querySelectorAll('body > a[name]');
+  if (anchors.length < 1) return;
+
+  const navWrapper = document.createElement('nav');
+  navWrapper.className = 'SideNav';
+  const navAnchorMap = {};
+  let activeAnchor;
+
+  for (let i = 0; i < anchors.length; i++) {
+    const anchor = anchors[i];
+    const navAnchor = document.createElement('a');
+    const anchorName = anchor.getAttribute('name');
+    navAnchor.setAttribute('href', `#${anchorName}`);
+    navAnchor.innerText = anchorName
+      .replace('-', ' ')
+      .replace(/\b\w/g, l => l.toUpperCase());
+    navAnchorMap[anchorName] = navAnchor;
+    navWrapper.appendChild(navAnchor);
+  }
+
+  document.body.appendChild(navWrapper);
+  document.body.classList.add('has-nav');
+
+  const setActiveAnchor = a => {
+    let activeNavAnchor = activeAnchor
+      ? navAnchorMap[activeAnchor.getAttribute('name')]
+      : null;
+    if (activeNavAnchor) {
+      activeNavAnchor.classList.remove('active');
+    }
+    activeAnchor = a;
+    activeNavAnchor = activeAnchor
+      ? navAnchorMap[activeAnchor.getAttribute('name')]
+      : null;
+    if (activeNavAnchor) {
+      activeNavAnchor.classList.add('active');
+    }
+  };
+
+  window.addEventListener('scroll', e => {
+    let top = window.scrollY;
+    if (top < anchors[0].offsetTop) {
+      setActiveAnchor(null);
+      return;
+    }
+    if (top + window.innerHeight == document.body.scrollHeight) {
+      setActiveAnchor(anchors[anchors.length - 1]);
+      return;
+    }
+    for (let i = 0; i < anchors.length; i++) {
+      const anchor = anchors[i];
+      const nextAnchor = i + 1 < anchors.length ? anchors[i + 1] : null;
+      if (
+        top >= anchor.offsetTop &&
+        (!nextAnchor || top < nextAnchor.offsetTop)
+      ) {
+        setActiveAnchor(anchor);
+        break;
+      }
+    }
+  });
+}
+
 addTableSortClickEvents();
+addSideNav();
