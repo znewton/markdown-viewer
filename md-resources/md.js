@@ -34,8 +34,12 @@ function sortTableRowsByColumn(table, col, sort) {
 
   newRows.sort(function compare(a, b) {
     if (sort == 0) {
-      aKey = parseInt(a.getElementsByTagName('td')[0].getAttribute('data-key'));
-      bKey = parseInt(b.getElementsByTagName('td')[0].getAttribute('data-key'));
+      let aKey = parseInt(
+        a.getElementsByTagName('td')[0].getAttribute('data-key')
+      );
+      let bKey = parseInt(
+        b.getElementsByTagName('td')[0].getAttribute('data-key')
+      );
       return aKey - bKey;
     }
     const aCell = a.getElementsByTagName('td')[col].innerText;
@@ -57,18 +61,26 @@ function addTableSortClickEvents() {
   const tables = document.getElementsByTagName('table');
   for (let i = 0; i < tables.length; i++) {
     const table = tables[i];
+    let sort = 0;
     const tableHeaders = table
       .getElementsByTagName('thead')[0]
       .getElementsByTagName('th');
     for (let j = 1; j < tableHeaders.length; j++) {
       const tableHeader = tableHeaders[j];
+
       tableHeader.addEventListener(
         'click',
         (function() {
           const colNum = j;
-          let sort = 0;
           return function() {
-            sort = sort == 1 ? -1 : sort + 1;
+            if (
+              !tableHeader.classList.contains('sort-asc') &&
+              !tableHeader.classList.contains('sort-desc')
+            ) {
+              sort = 1;
+            } else {
+              sort = sort == 1 ? -1 : sort + 1;
+            }
             for (let k = 0; k < tableHeaders.length; k++) {
               tableHeaders[k].classList.remove('sort-asc');
               tableHeaders[k].classList.remove('sort-desc');

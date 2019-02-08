@@ -1,4 +1,5 @@
 {
+  "extends": "eslint:recommended",
   "parserOptions": {
     "ecmaVersion": 2018,
     "sourceType": "module",
@@ -9,9 +10,11 @@
   "plugins": ["prettier"],
   "rules": {
     "semi": 2,
-    "prettier/prettier": "warn"
+    "prettier/prettier": "warn",
+    "no-console": "off"
   },
   "env": {
+    "node": true,
     "browser": true
   }
 }
