@@ -32,7 +32,7 @@ function createWindow(file) {
     );
   };
   if (openMarkdownFile(file, loadFile, errorAndExit)) {
-    loadFile(path.join(__dirname, 'index.html'));
+    loadFile(path.join(__dirname, './file-explorer/index.html'));
   }
   win.on('closed', () => {
     win = null;
