@@ -1,9 +1,10 @@
 {
   "name": "markdown-viewer",
   "version": "0.1.0",
-  "main": "main.js",
+  "main": "app/main.js",
   "description": "A simple desktop markdown viewer",
   "repository": "znewton/markdown-viewer",
+  "author": "Zach Newton <zach@znewton.xyz>",
   "license": "MIT",
   "scripts": {
     "start": "electron .",
@@ -16,7 +17,19 @@
   },
   "build": {
     "appId": "znewton.mdviewer",
-    "productName": "mdv"
+    "productName": "mdv",
+    "files": [
+      "app/**/*",
+      "node_modules/**/*",
+      "package.json"
+    ],
+    "linux": {
+      "category": "Utility",
+      "target": [
+        "AppImage",
+        "deb"
+      ]
+    }
   },
   "devDependencies": {
     "devtron": "^1.4.0",
