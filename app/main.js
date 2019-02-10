@@ -1,7 +1,8 @@
 const { app, BrowserWindow } = require('electron');
 const path = require('path');
 const url = require('url');
-const { openMarkdownFile } = require('./main-process/md2html');
+const fs = require('fs');
+const { openMarkdownFile } = require('./lib/md2html');
 
 function checkIfCalledViaCLI(args) {
   if (args && args.length > 1) {
@@ -31,8 +32,14 @@ function createWindow(file) {
       })
     );
   };
-  if (openMarkdownFile(file, loadFile, errorAndExit)) {
-    loadFile(path.join(__dirname, './file-explorer/index.html'));
+  try {
+    openMarkdownFile(file).then(loadFile);
+  } catch (e) {
+    if (e === false) {
+      loadFile(path.join(__dirname, './file-explorer/index.html'));
+    } else {
+      errorAndExit(e);
+    }
   }
   win.on('closed', () => {
     win = null;
@@ -64,7 +71,13 @@ Usage: md [file] [options]
         app.quit();
         return;
       } else {
-        fileArg = process.argv[i];
+        try {
+          if (fs.statSync(path.resolve(process.argv[i])).isFile()) {
+            fileArg = process.argv[i];
+          }
+        } catch (e) {
+          console.warn(`Unrecognized argument: ${process.argv[i]}`);
+        }
       }
     }
     createWindow(fileArg);

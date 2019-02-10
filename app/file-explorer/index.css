@@ -1,0 +1,62 @@
+:root {
+  --gray1: #1a1a1f;
+  --gray2: #3a3a3f;
+  --gray3: #5a5a5f;
+  --gray4: #7a7a7f;
+  --gray5: #9a9a9f;
+  --gray6: #bababf;
+  --gray7: #dadadf;
+  --gray8: #fafaff;
+
+  --link: #3642ff;
+  --link-hover: #121668;
+
+  --nav-width: 20rem;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  font-size: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  line-height: 1.2rem;
+  color: var(--gray2);
+  background: #fefeff;
+}
+
+body {
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+}
+
+* {
+  position: relative;
+  box-sizing: border-box;
+}
+
+.centered {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.FileTree {
+  width: 20rem;
+  background: var(--gray2);
+  color: var(--gray7);
+  height: 100%;
+  overflow-y: auto;
+}
+
+.FileViewer {
+  flex-grow: 1;
+  height: 100%;
+  overflow-y: auto;
+  background-color: var(--gray8);
+  color: var(--gray2);
+}
