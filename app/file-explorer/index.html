@@ -9,10 +9,11 @@
   <body>
     <nav class="FileTree" id="filetree"></nav>
     <main class="FileViewer" id="fileviewer">
-      <div class="centered">
+      <div id="fv-placeholder" class="FileViewer__placeholder">
         <div>Select a markdown file from the file tree</div>
       </div>
+      <div id="fv-iframewrapper" class="FileViewer__iframewrapper" style="display: none"></div>
     </main>
-    <script src="index.js" type="application/javascript"></script>
+    <script src="renderer.js" type="application/javascript"></script>
   </body>
 </html>

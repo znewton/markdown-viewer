@@ -2,7 +2,7 @@ const { app, BrowserWindow } = require('electron');
 const path = require('path');
 const url = require('url');
 const fs = require('fs');
-const { openMarkdownFile } = require('./lib/md2html');
+const { openMarkdownFile, setTempPath } = require('./lib/md2html');
 
 function checkIfCalledViaCLI(args) {
   if (args && args.length > 1) {
@@ -32,15 +32,15 @@ function createWindow(file) {
       })
     );
   };
-  try {
-    openMarkdownFile(file).then(loadFile);
-  } catch (e) {
-    if (e === false) {
-      loadFile(path.join(__dirname, './file-explorer/index.html'));
-    } else {
-      errorAndExit(e);
-    }
-  }
+  openMarkdownFile(file)
+    .then(loadFile)
+    .catch(e => {
+      if (e === false) {
+        loadFile(path.join(__dirname, './file-explorer/index.html'));
+      } else {
+        errorAndExit(e);
+      }
+    });
   win.on('closed', () => {
     win = null;
   });

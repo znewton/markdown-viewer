@@ -5,6 +5,13 @@ const marked = require('marked');
 const { JSDOM } = require('jsdom');
 const highlightJS = require('highlight.js');
 
+let tempPath = '';
+
+function setTempPath(app) {
+  console.log(app.constructor.name);
+  tempPath = app.getPath('temp');
+}
+
 function createCSSTag(relPath, document) {
   const filepath = path.join(__dirname, relPath);
   const tag = document.createElement('link');
@@ -93,7 +100,13 @@ function writeTemporaryHtmlFile(dom) {
     throw new Error('dom argument must be an instance of JSDOM');
   }
   return new Promise((res, rej) => {
-    const tmpFilePath = path.join(app.getPath('temp'), 'temp.index.html');
+    if (!tempPath && !app) {
+      rej('Temp path must be set or app must be accessible');
+    }
+    const tmpFilePath = path.join(
+      tempPath || app.getPath('temp'),
+      'temp.index.html'
+    );
 
     fs.writeFile(tmpFilePath, dom.serialize(), err => {
       if (err) {
@@ -116,4 +129,4 @@ async function openMarkdownFile(filepath) {
   return tmpFilepath;
 }
 
-module.exports = { generateHtmlFromMarkdown, openMarkdownFile };
+module.exports = { setTempPath, openMarkdownFile };

@@ -8,6 +8,8 @@
   --gray7: #dadadf;
   --gray8: #fafaff;
 
+  --bluegray: #5e5e8f;
+
   --link: #3642ff;
   --link-hover: #121668;
 
@@ -37,26 +39,70 @@ body {
   box-sizing: border-box;
 }
 
-.centered {
+.FileTree {
+  --width: 15rem;
+  width: var(--width);
+  min-width: var(--width);
+  background: var(--gray2);
+  color: var(--gray7);
+  height: 100%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+.FileTree__directory, .FileTree__file {
+  background: none;
+  font: inherit;
+  border: none;
+  color: inherit;
+  text-align: left;
+  padding: 0.5rem 0.2rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.FileTree__directory:hover, .FileTree__file:hover,
+.FileTree__directory:focus, .FileTree__file:focus {
+  cursor: pointer;
+  outline: none;
+  background: var(--gray3);
+  color: var(--gray8);
+}
+.FileTree__file::before {
+  content: "- ";
+  color: var(--gray5);
+}
+.FileTree__file.open {
+  color: var(--gray8);
+  background: var(--bluegray);
+}
+
+
+.FileViewer {
+  flex-grow: 1;
+  height: 100%;
+  width: 100%;
+  background-color: var(--gray8);
+  color: var(--gray2);
+  overflow: hidden;
+}
+.FileViewer__placeholder {
   height: 100%;
   width: 100%;
   display: flex;
   justify-content:center;
   align-items:center;
+  font-size: 1.5rem;
+  color: var(--gray6);
+  font-weight: 700;
 }
-
-.FileTree {
-  width: 20rem;
-  background: var(--gray2);
-  color: var(--gray7);
+.FileViewer__iframewrapper {
+  width: 100%;
   height: 100%;
-  overflow-y: auto;
+  overflow: hidden;
 }
-
-.FileViewer {
-  flex-grow: 1;
+.FileViewer__iframewrapper iframe {
+  width: 100%;
   height: 100%;
-  overflow-y: auto;
-  background-color: var(--gray8);
-  color: var(--gray2);
+  border: none;
 }
